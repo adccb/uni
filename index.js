@@ -4,19 +4,15 @@ const {
   token = "",
   blacklist = [],
   urls = [],
-  teammates = [],
-  unteammates = []
+  teammates = []
 } = require("./config");
 const headers = { Authorization: `token ${token}` };
 
 const tee = val => (console.log(val, "\n\n\n"), val);
 const isOnTeam = username => teammates.includes(username.toLowerCase());
-const isNotOnTeam = username => unteammates.includes(username.toLowerCase());
 
 const isValid = pull =>
-  isOnTeam(pull.user.login) &&
-  !isNotOnTeam(pull.user.login) &&
-  !blacklist.includes(pull.number);
+  isOnTeam(pull.user.login) && !blacklist.includes(pull.number);
 
 const getPullsFor = url =>
   axios
