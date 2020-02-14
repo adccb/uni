@@ -1,35 +1,4 @@
-const axios = require("axios");
-const moment = require("moment");
-const {
-  token = "",
-  blacklist = [],
-  urls = [],
-  teammates = []
-} = require("./config");
-const headers = { Authorization: `token ${token}` };
+const { token = "", urls = [] } = require("./config");
+const { getPullsFor } = require("./src/getPullsFor");
 
-const tee = val => (console.log(val, "\n\n\n"), val);
-const isOnTeam = username => teammates.includes(username.toLowerCase());
-
-const isValid = pull =>
-  isOnTeam(pull.user.login) && !blacklist.includes(pull.number);
-
-const getPullsFor = url =>
-  axios
-    .get(url, { headers })
-    .then(({ data }) =>
-      data
-        .filter(isValid)
-        .map(pull => [
-          pull.user.login,
-          pull.title,
-          moment(pull.created_at).fromNow(),
-          pull._links.html.href
-        ])
-    );
-
-urls.forEach(async url => {
-  let pulls = await getPullsFor(url);
-  pulls = pulls.map(p => p.join(" | "));
-  console.log(pulls.join("\n"));
-});
+urls.forEach(getPullsFor(token));
