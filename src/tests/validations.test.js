@@ -1,6 +1,6 @@
 const {
   isOnTeam,
-  isValid,
+  pullIsValid,
   configIsValid,
   isArrayOf
 } = require('../validations')
@@ -24,7 +24,7 @@ describe('isOnTeam', () => {
   })
 })
 
-describe('isValid', () => {
+describe('pullIsValid', () => {
   const buildPull = (login, number) => ({
     number,
     user: { login }
@@ -32,18 +32,18 @@ describe('isValid', () => {
 
   it('returns true if pull is valid', () => {
     const validPull = buildPull('mr. t', 20)
-    expect(isValid(validPull)).toBe(true)
+    expect(pullIsValid(validPull)).toBe(true)
   })
 
   it('returns true if pull is valid', () => {
     const invalidTeammate = buildPull('bill clinton', 20)
-    expect(isValid(invalidTeammate)).toBe(false)
+    expect(pullIsValid(invalidTeammate)).toBe(false)
 
     const invalidNumber = buildPull('charlie brown', 2)
-    expect(isValid(invalidNumber)).toBe(false)
+    expect(pullIsValid(invalidNumber)).toBe(false)
 
     const invalidBoth = buildPull('alyssa milano', 1)
-    expect(isValid(invalidBoth)).toBe(false)
+    expect(pullIsValid(invalidBoth)).toBe(false)
   })
 })
 

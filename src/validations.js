@@ -3,7 +3,7 @@ const { tee } = require('./utils')
 
 const notZeroable = false
 const isOnTeam = username => teammates.includes(username.toLowerCase())
-const isValid = pull =>
+const pullIsValid = pull =>
   isOnTeam(pull.user.login) && !blacklist.includes(pull.number)
 
 const isArrayOf = (type, zeroable = true) => collection =>
@@ -36,4 +36,4 @@ const configIsValid = (config, cb) => {
   return obj
 }
 
-module.exports = { isOnTeam, isValid, configIsValid, isArrayOf }
+module.exports = { isOnTeam, pullIsValid, configIsValid, isArrayOf }
