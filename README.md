@@ -19,7 +19,7 @@ i'm currently running this with `node index.js`. (technically i have an alias, b
 
 `"token"`: a personal access token from github.
 
-`"urls"`: a list of repo urls, in the form `https://api.github.com/:owner/:repo`
+`"urls"`: a list of repo urls, in the form `:owner/:repo`. _trailing slashes are not supported and will break._
 
 ## example output
 
