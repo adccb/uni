@@ -1,19 +1,20 @@
 const { teammates = [], blacklist = [] } = require('../config')
 const { tee } = require('./utils')
 
+const notZeroable = false
 const isOnTeam = username => teammates.includes(username.toLowerCase())
 const isValid = pull =>
   isOnTeam(pull.user.login) && !blacklist.includes(pull.number)
 
-const isArrayOf = type => collection =>
+const isArrayOf = (type, zeroable = true) => collection =>
   Array.isArray(collection) &&
-  collection.length >= 1 &&
+  (zeroable || collection.length >= 1) &&
   collection.every(i => typeof i === type)
 
 const blacklistIsValid = isArrayOf('number')
-const teammatesIsValid = isArrayOf('string')
+const teammatesIsValid = isArrayOf('string', notZeroable)
 const unteammatesIsValid = isArrayOf('string')
-const urlsIsValid = isArrayOf('string')
+const urlsIsValid = isArrayOf('string', notZeroable)
 const tokenIsValid = i => typeof i === 'string'
 
 const validate = ({ blacklist, teammates, token, unteammates, urls }) =>
