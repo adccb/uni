@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "prettier --write ./**/*.js"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +13,11 @@
   "dependencies": {
     "axios": "^0.19.2",
     "jest": "^25.1.0",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "prettier": "^1.19.1"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
   }
 }
