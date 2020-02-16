@@ -1,9 +1,4 @@
-const {
-  isOnTeam,
-  pullIsValid,
-  configIsValid,
-  isArrayOf
-} = require('../validations')
+const { isOnTeam, pullIsValid, configIsValid } = require('../validations')
 
 jest.mock(
   '../../config.json',
@@ -60,34 +55,31 @@ describe('configIsValid', () => {
   const stringArray = [string]
   const numberArray = [1234]
   const emptyArray = []
-  const testConfigWith = partialConfig =>
-    configIsValid(buildConfig(partialConfig), () => null)
+  const testConfigWith = async partialConfig => {
+    try {
+      return await configIsValid(buildConfig(partialConfig))
+    } catch (error) {
+      return error
+    }
+  }
 
-  it('validates busted types', () => {
-    expect(testConfigWith({ blacklist: numberArray })).toBe('valid')
-    expect(testConfigWith({ blacklist: stringArray })).toBe('blacklist')
+  it('validates busted types', async () => {
+    expect(await testConfigWith({ blacklist: numberArray })).toBe('valid')
+    expect(await testConfigWith({ blacklist: stringArray })).toBe('blacklist')
 
-    expect(testConfigWith({ teammates: stringArray })).toBe('valid')
-    expect(testConfigWith({ teammates: numberArray })).toBe('teammates')
-    expect(testConfigWith({ teammates: emptyArray })).toBe('teammates')
+    expect(await testConfigWith({ teammates: stringArray })).toBe('valid')
+    expect(await testConfigWith({ teammates: numberArray })).toBe('teammates')
+    expect(await testConfigWith({ teammates: emptyArray })).toBe('teammates')
 
-    expect(testConfigWith({ token: string })).toBe('valid')
-    expect(testConfigWith({ token: numberArray })).toBe('token')
-    expect(testConfigWith({ token: stringArray })).toBe('token')
+    expect(await testConfigWith({ token: string })).toBe('valid')
+    expect(await testConfigWith({ token: numberArray })).toBe('token')
+    expect(await testConfigWith({ token: stringArray })).toBe('token')
 
-    expect(testConfigWith({ unteammates: stringArray })).toBe('valid')
-    expect(testConfigWith({ unteammates: numberArray })).toBe('unteammates')
+    expect(await testConfigWith({ unteammates: stringArray })).toBe('valid')
+    expect(await testConfigWith({ unteammates: numberArray })).toBe('unteammates')
 
-    expect(testConfigWith({ urls: stringArray })).toBe('valid')
-    expect(testConfigWith({ urls: numberArray })).toBe('urls')
-    expect(testConfigWith({ urls: emptyArray })).toBe('urls')
-  })
-
-  describe('isArrayOf', () => {
-    it('works on non-collections', () => {
-      expect(isArrayOf('string')(['', '', '', ''])).toBe(true)
-      expect(isArrayOf('number')([1, 2, 3, 4])).toBe(true)
-      expect(isArrayOf('number')([])).toBe(true)
-    })
+    expect(await testConfigWith({ urls: stringArray })).toBe('valid')
+    expect(await testConfigWith({ urls: numberArray })).toBe('urls')
+    expect(await testConfigWith({ urls: emptyArray })).toBe('urls')
   })
 })
