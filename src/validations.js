@@ -3,13 +3,10 @@ const { tee } = require('./utils')
 
 const notZeroable = false
 const isOnTeam = username => teammates.includes(username.toLowerCase())
-const pullIsValid = pull =>
-  isOnTeam(pull.user.login) && !blacklist.includes(pull.number)
+const pullIsValid = pull => isOnTeam(pull.user.login) && !blacklist.includes(pull.number)
 
 const isArrayOf = (type, zeroable = true) => collection =>
-  Array.isArray(collection) &&
-  (zeroable || collection.length >= 1) &&
-  collection.every(i => typeof i === type)
+  Array.isArray(collection) && (zeroable || collection.length >= 1) && collection.every(i => typeof i === type)
 
 const blacklistIsValid = isArrayOf('number')
 const teammatesIsValid = isArrayOf('string', notZeroable)

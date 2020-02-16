@@ -7,9 +7,7 @@ const { formatPull, formatUrl } = require('./formatters')
 const getPullsFor = token => url =>
   axios
     .get(formatUrl(url), { headers: headers(token) })
-    .then(({ data }) =>
-      data.filter(pullIsValid).map(pull => console.log(formatPull(pull)))
-    )
+    .then(({ data }) => data.filter(pullIsValid).map(pull => console.log(formatPull(pull))))
     .catch(err => console.log(err))
 
 module.exports = { getPullsFor }
