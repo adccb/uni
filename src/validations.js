@@ -28,6 +28,6 @@ const configIsValid = config =>
   new Promise((res, rej) => {
     const result = validateConfig(config)
     result === 'valid' ? res(result) : rej(result)
-  })
+  }).catch(reason => console.log(`your ${reason} config var is off, check the readme`))
 
 module.exports = { isOnTeam, pullIsValid, configIsValid, isArrayOf }
