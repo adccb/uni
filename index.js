@@ -8,6 +8,12 @@ const getPulls = getPullsUsing(token)
 const getFlags = args => process.argv.filter(i => /^\-/.test(i))
 const isWatch = flags => flags.includes('--watch') || flags.includes('-w')
 
+// prettier-ignore
+const startApp = flags => isWatch(flags)
+  ? watch()
+  : oneShot(urls, getPulls)
+
 configIsValid({ token, urls, ...rest })
+  .catch(reason => console.log(`your ${reason} config var is off, check the readme`))
   .then(getFlags)
-  .then(flags => (isWatch(flags) ? watch() : oneShot(urls, getPulls)))
+  .then(startApp)
