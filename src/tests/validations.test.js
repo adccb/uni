@@ -46,10 +46,11 @@ describe('configIsValid', () => {
   const buildConfig = ({
     blacklist = [1, 2, 3, 4],
     teammates = ['hello', 'world'],
+    pollingInterval = 0,
     token = 'this is a token',
     unteammates = ['hello', 'unteammates'],
     urls = ['ggogle.oggle', 'whatever.co']
-  }) => ({ blacklist, teammates, token, unteammates, urls })
+  }) => ({ blacklist, teammates, pollingInterval, token, unteammates, urls })
 
   const string = 'string'
   const stringArray = [string]
@@ -70,6 +71,10 @@ describe('configIsValid', () => {
     expect(await testConfigWith({ teammates: stringArray })).toBe('valid')
     expect(await testConfigWith({ teammates: numberArray })).toBe('teammates')
     expect(await testConfigWith({ teammates: emptyArray })).toBe('teammates')
+
+    expect(await testConfigWith({ pollingInterval: 10 })).toBe('valid')
+    expect(await testConfigWith({ pollingInterval: numberArray })).toBe('pollingInterval')
+    expect(await testConfigWith({ pollingInterval: emptyArray })).toBe('pollingInterval')
 
     expect(await testConfigWith({ token: string })).toBe('valid')
     expect(await testConfigWith({ token: numberArray })).toBe('token')

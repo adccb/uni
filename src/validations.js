@@ -10,17 +10,20 @@ const teammatesIsValid = isArrayOf('string', notZeroable)
 const unteammatesIsValid = isArrayOf('string')
 const urlsIsValid = isArrayOf('string', notZeroable)
 const tokenIsValid = i => typeof i === 'string'
+const pollingIntervalIsValid = i => typeof i === 'number'
 
-const validateConfig = ({ blacklist, teammates, token, unteammates, urls }) =>
+const validateConfig = ({ blacklist, teammates, pollingInterval, token, unteammates, urls }) =>
   blacklistIsValid(blacklist)
     ? teammatesIsValid(teammates)
-      ? unteammatesIsValid(unteammates)
-        ? urlsIsValid(urls)
-          ? tokenIsValid(token)
-            ? 'valid'
-            : 'token'
-          : 'urls'
-        : 'unteammates'
+      ? pollingIntervalIsValid(pollingInterval)
+        ? unteammatesIsValid(unteammates)
+          ? urlsIsValid(urls)
+            ? tokenIsValid(token)
+              ? 'valid'
+              : 'token'
+            : 'urls'
+          : 'unteammates'
+        : 'pollingInterval'
       : 'teammates'
     : 'blacklist'
 

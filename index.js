@@ -10,7 +10,7 @@ const isWatch = flags => flags.includes('--watch') || flags.includes('-w')
 
 // prettier-ignore
 const startApp = flags => isWatch(flags)
-  ? watch()
+  ? watch(urls, getPulls)
   : oneShot(urls, getPulls)
 
 configIsValid({ token, urls, ...rest })
