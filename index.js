@@ -3,17 +3,35 @@ const { configIsValid } = require('./src/validations')
 const { tee } = require('./src/utils')
 const { getPullsUsing } = require('./src/getPullsUsing')
 const { oneShot, watch } = require('./src/modes')
+const publisher = require('./src/publisher')
 
 const getPulls = getPullsUsing(token)
 const getFlags = args => process.argv.filter(i => /^\-/.test(i))
 const isWatch = flags => flags.includes('--watch') || flags.includes('-w')
 
-// prettier-ignore
-const startApp = flags => isWatch(flags)
-  ? watch(urls, getPulls)
-  : oneShot(urls, getPulls)
+// filters
+const noFilter = output => output
+const clearAll = output => false
+
+const keybindings = {
+  n: noFilter,
+  c: clearAll
+}
 
 configIsValid({ token, urls, ...rest })
   .catch(reason => console.log(`your ${reason} config var is off, check the readme`))
   .then(getFlags)
-  .then(startApp)
+  .then(flags => {
+    let app
+
+    if (!isWatch(flags)) {
+      return oneShot({ urls, getPulls, filter })
+    }
+
+    publisher.on('keypress', payload => {
+      clearInterval(app)
+      app = watch({ urls, getPulls, filter: keybindings[payload] })
+    })
+
+    app = watch({ urls, getPulls, filter: noFilter })
+  })

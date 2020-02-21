@@ -11,4 +11,14 @@ const noop = () => null
 const chain = init => (...fns) => fns.reduce((oldVal, fn) => fn(oldVal), init)
 const emptyChain = chain(undefined)
 
-module.exports = { headers, tee, isArrayOf, def, dateDescending, executeAndSetTimer, noop, chain, emptyChain }
+module.exports = {
+  headers,
+  tee,
+  isArrayOf,
+  def,
+  dateDescending,
+  executeAndSetTimer,
+  noop,
+  chain,
+  emptyChain
+}
