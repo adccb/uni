@@ -3,4 +3,6 @@ const filters = {
   clearAll: output => false
 }
 
-module.exports = { filters, filterNames: Object.keys(filters) }
+filters.filterNames = Object.keys(filters)
+
+module.exports = filters
