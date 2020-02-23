@@ -1,4 +1,4 @@
-const { token = '', urls = [], ...rest } = require('./config')
+const { token = '', urls = [], keybindings, ...rest } = require('./config')
 
 const { configIsValid } = require('./src/validations')
 const { noFilter, clearAll } = require('./src/filters')
@@ -10,12 +10,14 @@ const getPulls = getPullsUsing(token)
 const getFlags = args => process.argv.filter(i => /^\-/.test(i))
 const isWatch = flags => flags.includes('--watch') || flags.includes('-w')
 
-const keybindings = {
-  n: noFilter,
-  c: clearAll
+const filters = {
+  noFilter,
+  clearAll
 }
 
-configIsValid({ token, urls, ...rest })
+const toFilter = key => filters[keybindings[key]]
+
+configIsValid({ token, urls, keybindings, ...rest })
   .catch(reason => console.log(`your ${reason} config var is off, check the readme`))
   .then(getFlags)
   .then(flags => {
@@ -24,6 +26,6 @@ configIsValid({ token, urls, ...rest })
 
     publisher.on('keypress', payload => {
       clearInterval(app)
-      app = watch({ urls, getPulls, filter: keybindings[payload], useCache: true })
+      app = watch({ urls, getPulls, filter: toFilter(payload), useCache: true })
     })
   })

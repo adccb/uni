@@ -1,3 +1,5 @@
+const { keybindings } = require('../config')
+
 const moment = require('moment')
 const { blue, green, yellow } = require('chalk')
 
@@ -32,4 +34,12 @@ const findCorrectColor = date =>
 
 const formatDate = date => findCorrectColor(date)(moment(date).fromNow(true))
 
-module.exports = { formatDate, formatPull, formatUrl, formatOutput }
+const formatKeybindings = keybindings =>
+  Object.keys(keybindings)
+    .map(key => `${key}: ${keybindings[key]}`)
+    .join('\n  ')
+
+const formatInfoBar = () =>
+  console.clear() || console.log(`ctrl+c or ctrl+d to exit. keybindings:\n  ${formatKeybindings(keybindings)}\n`)
+
+module.exports = { formatDate, formatPull, formatUrl, formatOutput, formatKeybindings, formatInfoBar }
