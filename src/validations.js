@@ -2,7 +2,7 @@ const { teammates = [], blacklist = [] } = require('../config')
 const { isArrayOf } = require('./utils')
 
 const notZeroable = false
-const isOnTeam = username => teammates.includes(username.toLowerCase())
+const isOnTeam = username => teammates.map(i => i.toLowerCase()).includes(username.toLowerCase())
 const pullIsValid = pull => isOnTeam(pull.user.login) && !blacklist.includes(pull.number)
 
 const blacklistIsValid = isArrayOf('number')

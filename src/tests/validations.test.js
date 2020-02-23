@@ -10,8 +10,9 @@ jest.mock(
 )
 
 describe('isOnTeam', () => {
-  it('returns true if string is in teammates array', () => {
+  it('returns true if string is in teammates array, case-insensitively', () => {
     expect(isOnTeam('charlie brown')).toBe(true)
+    expect(isOnTeam('cHaRlIe bRoWn')).toBe(true)
   })
 
   it('returns false if string is not in teammates array', () => {
