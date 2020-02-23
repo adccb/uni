@@ -58,10 +58,14 @@ describe('configIsValid', () => {
     urls = ['ggogle.oggle', 'whatever.co']
   }) => ({ blacklist, keybindings, teammates, pollingInterval, token, unteammates, urls })
 
+  // some values as shorthands
   const string = 'string'
   const stringArray = [string]
   const numberArray = [1234]
   const emptyArray = []
+  const validKeybindings = { a: 'noFilter' }
+  const invalidKeybindings = { a: 'something else' }
+
   const testConfigWith = async partialConfig => {
     try {
       return await configIsValid(buildConfig(partialConfig))
@@ -77,6 +81,9 @@ describe('configIsValid', () => {
     expect(await testConfigWith({ teammates: stringArray })).toBe('valid')
     expect(await testConfigWith({ teammates: numberArray })).toBe('teammates')
     expect(await testConfigWith({ teammates: emptyArray })).toBe('teammates')
+
+    expect(await testConfigWith({ keybindings: validKeybindings })).toBe('valid')
+    expect(await testConfigWith({ keybindings: invalidKeybindings })).toBe('keybindings')
 
     expect(await testConfigWith({ pollingInterval: 10 })).toBe('valid')
     expect(await testConfigWith({ pollingInterval: numberArray })).toBe('pollingInterval')

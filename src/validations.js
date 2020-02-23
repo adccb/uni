@@ -12,7 +12,7 @@ const unteammatesIsValid = isArrayOf('string')
 const urlsIsValid = isArrayOf('string', notZeroable)
 const tokenIsValid = i => typeof i === 'string'
 const pollingIntervalIsValid = i => typeof i === 'number'
-const keybindingsIsValid = i => Object.values(i).every(i => filterNames.includes(i))
+const keybindingsIsValid = i => Object.values(i).every(value => filterNames.includes(value))
 
 const validateConfig = ({ blacklist, keybindings, teammates, pollingInterval, token, unteammates, urls }) =>
   blacklistIsValid(blacklist)
