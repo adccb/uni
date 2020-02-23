@@ -1,5 +1,4 @@
 const { isOnTeam, pullIsValid, configIsValid } = require('../validations')
-
 jest.mock(
   '../../config.json',
   () => ({
@@ -44,14 +43,20 @@ describe('pullIsValid', () => {
 })
 
 describe('configIsValid', () => {
+  const defaultKeybindings = {
+    c: 'clearAll',
+    n: 'noFilter'
+  }
+
   const buildConfig = ({
     blacklist = [1, 2, 3, 4],
+    keybindings = defaultKeybindings,
     teammates = ['hello', 'world'],
     pollingInterval = 0,
     token = 'this is a token',
     unteammates = ['hello', 'unteammates'],
     urls = ['ggogle.oggle', 'whatever.co']
-  }) => ({ blacklist, teammates, pollingInterval, token, unteammates, urls })
+  }) => ({ blacklist, keybindings, teammates, pollingInterval, token, unteammates, urls })
 
   const string = 'string'
   const stringArray = [string]
