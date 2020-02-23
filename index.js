@@ -25,12 +25,12 @@ configIsValid({ token, urls, ...rest })
     let app
 
     if (!isWatch(flags)) {
-      return oneShot({ urls, getPulls, filter })
+      return oneShot({ urls, getPulls, filter: noFilter })
     }
 
     publisher.on('keypress', payload => {
       clearInterval(app)
-      app = watch({ urls, getPulls, filter: keybindings[payload] })
+      app = watch({ urls, getPulls, filter: keybindings[payload], useCache: true })
     })
 
     app = watch({ urls, getPulls, filter: noFilter })

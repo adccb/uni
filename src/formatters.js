@@ -1,7 +1,7 @@
 const moment = require('moment')
 const { blue, green, yellow } = require('chalk')
 
-const { tee, def, dateDescending } = require('./utils')
+const { dateDescending } = require('./utils')
 
 const formatUrl = url => `https://api.github.com/repos/${url}/pulls`
 const formatTitle = title =>
@@ -23,17 +23,13 @@ const formatOutput = allRepos =>
     .map(formatPull)
     .join('\n')
 
-// prettier-ignore
 const findCorrectColor = date =>
-  def((
-    formattedDate = moment(date).fromNow()) =>
-    formattedDate.includes('days') ? blue : green)
+  moment(date)
+    .fromNow()
+    .includes('days')
+    ? blue
+    : green
 
-// prettier-ignore
-const formatDate = date =>
-  def((
-    displayText = moment(date).fromNow(true),
-    color = findCorrectColor(date)) => 
-    color(displayText))
+const formatDate = date => findCorrectColor(date)(moment(date).fromNow(true))
 
 module.exports = { formatDate, formatPull, formatUrl, formatOutput }

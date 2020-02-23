@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-const { headers, tee } = require('./utils')
+const { headers } = require('./utils')
 const { pullIsValid } = require('./validations')
 const { formatUrl } = require('./formatters')
 

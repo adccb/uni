@@ -1,5 +1,5 @@
 const { teammates = [], blacklist = [] } = require('../config')
-const { tee, isArrayOf } = require('./utils')
+const { isArrayOf } = require('./utils')
 
 const notZeroable = false
 const isOnTeam = username => teammates.includes(username.toLowerCase())
