@@ -3,7 +3,7 @@ const { keybindings } = require('../config')
 const moment = require('moment')
 const { blue, green, yellow } = require('chalk')
 
-const { dateDescending } = require('./utils')
+const { dateDescending, tee } = require('./utils')
 
 const formatUrl = url => `https://api.github.com/repos/${url}/pulls`
 const formatTitle = title =>
@@ -19,8 +19,6 @@ const formatPull = pull =>
 
 const formatOutput = allRepos =>
   allRepos
-    .flat()
-    .flat()
     .sort(dateDescending)
     .map(formatPull)
     .join('\n')

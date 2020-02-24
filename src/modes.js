@@ -4,13 +4,14 @@ const { stdin } = process
 const { formatOutput, formatKeybindings, formatInfoBar } = require('./formatters')
 const publisher = require('./publisher')
 const cache = require('./cache')
-const { executeAndSetTimer, noop } = require('./utils')
+const { executeAndSetTimer, noop, tee } = require('./utils')
 const writeOutput = console.log
 
 const oneShot = ({ urls, getPulls, beforeRender = noop, filter }) =>
   Promise.all(urls.map(async url => cache.persist(url, await getPulls(url))))
-    .then(formatOutput)
+    .then(i => i.flat())
     .then(filter)
+    .then(formatOutput)
     .then(output => {
       beforeRender()
       writeOutput(output)
