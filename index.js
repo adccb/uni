@@ -16,8 +16,9 @@ configIsValid({ token, urls, keybindings, ...rest })
   .catch(reason => console.log(`your ${reason} config var is off, check the readme`))
   .then(getFlags)
   .then(flags => {
-    if (!isWatch(flags)) return oneShot({ urls, getPulls, filter: noFilter })
     const { noFilter } = filters
+
+    if (!isWatch(flags)) return oneShot({ urls, getPulls, filter: noFilter })
     let app = watch({ urls, getPulls, filter: noFilter })
 
     publisher.on('keypress', payload => {
