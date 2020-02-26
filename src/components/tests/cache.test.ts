@@ -1,4 +1,4 @@
-const { getPulls, persist } = require('../cache')
+import { getPulls, persist } from '../cache'
 
 describe('cache', () => {
   it('sets and gets the correct data', () => {

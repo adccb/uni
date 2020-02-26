@@ -4,12 +4,17 @@ here's a script. it'll fetch your teammates' currently open PRs.
 
 ## usage
 
-i'm currently running this with `node index.js`. (technically i have an alias, but.) if you want to throw a node shebang somewhere and just call it, that could be cool too.
+```bash
+$ cd path/to/pulls
+$ npm start # starts in watch mode
+$ npm run start:once # starts in one-shot mode
+```
 
+(protip: `alias pulls="npm start --prefix path/to/pulls"`)
 
 ## configuration
 
-`$ mv config.example.json config.json`
+`$ mv config.example.json ~/.config/pulls/config.json`
 
 ### values
 
@@ -26,8 +31,16 @@ i'm currently running this with `node index.js`. (technically i have an alias, b
 ## example output
 
 
-```bash
+```
 $ pulls
-mxtetrachord | Add README to pulls repo | 23 minutes ago | https://github.com/mxtetrachord/pulls/31
+
+cHaRlIeBrOwN (18 hours) | Add tests to catch the case where Widgets don't update...
+  https://github.com/owner/repo/pull/18044
+
+Carlos_Santana (a day) | add edit-owner-name mutation so the frontend...
+  https://github.com/owner/smaller-repo/pull/340
+
+williamjclinton (12 days) | Add "id" field to a bunch of gql queries for apollo cache...
+  https://github.com/owner/yet-other-repo/pull/2
 ```
 

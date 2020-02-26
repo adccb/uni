@@ -2,7 +2,8 @@
   "compilerOptions": {
     "outDir": "build/",
     "allowJs": true,
-    "checkJs": true
+    "checkJs": true,
+    "lib": ["ES2015", "dom", "ES2019"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules/", "build/"]
