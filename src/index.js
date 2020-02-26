@@ -1,10 +1,10 @@
-const { token = '', urls = [], keybindings, ...rest } = require('./config')
+const { token = '', urls = [], keybindings, ...rest } = require('../config')
 
-const { configIsValid } = require('./src/validations')
-const filters = require('./src/filters')
-const { getPullsUsing } = require('./src/getPullsUsing')
-const { oneShot, watch } = require('./src/modes')
-const publisher = require('./src/publisher')
+const { configIsValid } = require('./validations')
+const filters = require('./filters')
+const { getPullsUsing } = require('./getPullsUsing')
+const { oneShot, watch } = require('./modes')
+const publisher = require('./publisher')
 
 const getPulls = getPullsUsing(token)
 const getFlags = args => process.argv.filter(i => /^\-/.test(i))

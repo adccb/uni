@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watch",
-    "lint": "prettier --write ./**/*.js"
+    "lint": "prettier --write ./**/*.js",
+    "build": "tsc",
+    "build:watch": "tsc --watch"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +17,8 @@
     "chalk": "^3.0.0",
     "jest": "^25.1.0",
     "moment": "^2.24.0",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "typescript": "^3.8.2"
   },
   "prettier": {
     "semi": false,
