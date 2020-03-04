@@ -20,7 +20,6 @@ export const oneShot = async ({ urls, getPulls, beforeRender = noop, filter }) =
       writeOutput(output)
     })
 
-export const isWatch = flags => flags.includes('--watch') || flags.includes('-w')
 export const watch = async ({ urls, getPulls, filter, useCache = false }) => {
   stdin.resume()
   stdin.setEncoding('utf-8')
