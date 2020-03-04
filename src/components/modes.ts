@@ -10,11 +10,9 @@ import { executeAndSetTimer, noop, tee } from '../utils'
 
 const writeOutput = console.log
 
-export const isWatch = flags => flags.includes('--watch') || flags.includes('-w')
-
-export const oneShot = ({ urls, getPulls, beforeRender = noop, filter }) =>
-  Promise.all(urls.map(async url => cache.persist(url, await getPulls(url))))
-    .then(i => i.flat())
+export const oneShot = async ({ urls, getPulls, beforeRender = noop, filter }) =>
+  getPulls()
+    .then(cache.persist(new Date().getTime()))
     .then(filter)
     .then(formatOutput)
     .then(output => {
@@ -22,7 +20,8 @@ export const oneShot = ({ urls, getPulls, beforeRender = noop, filter }) =>
       writeOutput(output)
     })
 
-export const watch = ({ urls, getPulls, filter, useCache = false }) => {
+export const isWatch = flags => flags.includes('--watch') || flags.includes('-w')
+export const watch = async ({ urls, getPulls, filter, useCache = false }) => {
   stdin.resume()
   stdin.setEncoding('utf-8')
   stdin.setRawMode(true)
@@ -38,12 +37,9 @@ export const watch = ({ urls, getPulls, filter, useCache = false }) => {
     }
   })
 
-  return executeAndSetTimer(
-    oneShot,
-    // the first time, we check if we're using the cache; if we are, pass it through
-    { urls, getPulls: useCache ? cache.getPulls : getPulls, beforeRender: formatInfoBar, filter },
-    // when we re-poll, though, we should use the http version to make sure we're recent
-    { urls, getPulls, beforeRender: formatInfoBar, filter },
+  await oneShot({ urls, getPulls: useCache ? cache.getPulls : getPulls, beforeRender: formatInfoBar, filter })
+  return setInterval(
+    async () => await oneShot({ urls, getPulls, beforeRender: formatInfoBar, filter }),
     pollingInterval * 1000
   )
 }

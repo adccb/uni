@@ -1,14 +1,14 @@
 import config from './components/config'
 
 import filters, { toFilter } from './filters'
-import getPullsUsing from './getPullsUsing'
+import Github from './getPullsUsing'
 import { oneShot, watch, isWatch } from './components/modes'
 import * as publisher from './components/publisher'
 
 const { token, urls, keybindings } = config
 const { noFilter } = filters
 
-const getPulls = getPullsUsing(token)
+const getPulls = Github.fetchPulls
 const flags = process.argv.filter(i => /^\-/.test(i))
 
 if (!isWatch(flags)) {
@@ -18,8 +18,10 @@ if (!isWatch(flags)) {
   })()
 }
 
-let app = watch({ urls, getPulls, filter: noFilter })
-publisher.on('keypress', payload => {
-  clearInterval(app)
-  app = watch({ urls, getPulls, filter: toFilter(payload), useCache: true })
-})
+;(async () => {
+  let app = await watch({ urls, getPulls, filter: noFilter })
+  publisher.on('keypress', async payload => {
+    clearInterval(app)
+    app = await watch({ urls, getPulls, filter: toFilter(payload), useCache: true })
+  })
+})()
