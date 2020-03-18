@@ -35,7 +35,22 @@ describe('createFile', () => {
   })
 
   it('creates the file', () => {
-    writer.createFile()
-    expect(write).toHaveBeenCalledWith(todoFile, JSON.stringify({ todos: [] }))
+    writer.createTodoFile()
+    expect(write).toHaveBeenCalledWith(todoFile, JSON.stringify({ todos: [], endDate: null }))
+  })
+})
+
+describe('setSprintEnd', () => {
+  const write = jest.fn()
+  const writer = new Writer(write)
+
+  beforeEach(() => {
+    write.mockReset()
+  })
+
+  it('sets the value', () => {
+    const newEnd = '2020-02-20'
+    writer.setSprintEnd(newEnd)
+    expect(write).toHaveBeenCalledWith(todoFile, JSON.stringify({ todos: ['default val'], endDate: newEnd }))
   })
 })

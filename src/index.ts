@@ -12,7 +12,7 @@ commander
 commander
   .command('start <endDate>')
   .description('start a sprint')
-  .action(endDate => console.log(endDate))
+  .action(writer.setSprintEnd)
 
 commander
   .command('add <ticketNum>')
